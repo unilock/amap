@@ -3,6 +3,7 @@
   "key.amap.worldmap.open": "Open world map",
 
   "key.categories.amap.minimap": "AMap minimap",
+  "key.amap.minimap.config": "Open minimap config",
   "key.amap.minimap.zoom_out": "Zoom out minimap",
   "key.amap.minimap.zoom_in": "Zoom in minimap",
   "key.amap.minimap.toggle_rotation": "Toggle rotation",
