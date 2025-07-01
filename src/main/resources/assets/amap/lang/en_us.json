@@ -32,6 +32,7 @@
   "config.amap.option.minimap.largeLabel": "Large Map Label",
   "config.amap.option.minimap.filtering": "Filtering",
   "config.amap.option.minimap.showCoordinates": "Show Coordinates",
+  "config.amap.option.minimap.showBiome": "Show Biome",
   "config.amap.option.minimap.showMenuKey": "Show MenuKey",
   "config.amap.option.minimap.fontScale": "Font Scale",
   "config.amap.option.minimap.defaultZoom": "Default Zoom",

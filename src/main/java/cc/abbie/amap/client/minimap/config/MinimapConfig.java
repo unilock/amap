@@ -37,6 +37,7 @@ public class MinimapConfig extends ReflectiveConfig {
         public final TrackedValue<Boolean> largeLabel = value(false);
         public final TrackedValue<Boolean> filtering = value(true);
         public final TrackedValue<CoordinatesType> showCoordinates = value(CoordinatesType.TYPE2);
+        public final TrackedValue<Boolean> showBiome = value(true);
         public final TrackedValue<Boolean> showMenuKey = value(true);
         public final TrackedValue<Scale> fontScale = value(Scale.AUTO);
         public final TrackedValue<Zoom> defaultZoom = value(Zoom.X1_0);

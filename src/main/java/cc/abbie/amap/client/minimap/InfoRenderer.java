@@ -4,8 +4,10 @@ import cc.abbie.amap.client.minimap.config.MinimapConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
 
@@ -18,6 +20,9 @@ public class InfoRenderer {
 
         if (MinimapConfig.INSTANCE.minimap.showCoordinates.value() != MinimapConfig.Minimap.CoordinatesType.DISABLED) {
             height += 2 * lineHeight;
+        }
+        if (MinimapConfig.INSTANCE.minimap.showBiome.value()) {
+            height += lineHeight;
         }
         if (MinimapConfig.INSTANCE.minimap.showMenuKey.value()) {
             height += lineHeight;
@@ -51,6 +56,17 @@ public class InfoRenderer {
                 gui.drawCenteredString(font, String.format("%.2f (%d)", eyePos.y, footPos), centreX, yOffset, -1);
                 yOffset += lineHeight;
             }
+        }
+
+        if (MinimapConfig.INSTANCE.minimap.showBiome.value()) {
+            ClientLevel level = client.level;
+            LocalPlayer player = client.player;
+            if (level == null || player == null) return;
+
+            ResourceLocation biomeId = level.getBiome(player.blockPosition()).unwrapKey().orElseThrow().location();
+            Component infoLine = Component.translatable("biome.%s.%s".formatted(biomeId.getNamespace(), biomeId.getPath()));
+            gui.drawCenteredString(font, infoLine, centreX, yOffset, -1);
+            yOffset += lineHeight;
         }
 
         if (MinimapConfig.INSTANCE.minimap.showMenuKey.value()) {
