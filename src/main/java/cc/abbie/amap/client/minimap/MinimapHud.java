@@ -45,7 +45,7 @@ public class MinimapHud implements HudRenderCallback {
 
     @Override
     public void onHudRender(GuiGraphics gui, DeltaTracker deltaTracker) {
-        if (!MinimapConfig.INSTANCE.enable.value() || Minecraft.getInstance().options.hideGui) return;
+        if (!MinimapConfig.INSTANCE.enable.value() || Minecraft.getInstance().options.hideGui || Minecraft.getInstance().getDebugOverlay().showDebugScreen()) return;
 
         float tickDelta = deltaTracker.getGameTimeDeltaPartialTick(false);
         PoseStack pose = gui.pose();
