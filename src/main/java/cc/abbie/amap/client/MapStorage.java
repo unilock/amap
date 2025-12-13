@@ -20,8 +20,8 @@ import folk.sisby.surveyor.landmark.Landmark;
 import folk.sisby.surveyor.landmark.WorldLandmarks;
 import folk.sisby.surveyor.terrain.ChunkSummary;
 import folk.sisby.surveyor.terrain.LayerSummary;
-import folk.sisby.surveyor.terrain.RegionSummary;
 import folk.sisby.surveyor.terrain.WorldTerrainSummary;
+import folk.sisby.surveyor.util.RegionPos;
 import folk.sisby.surveyor.util.RegistryPalette;
 
 import java.util.BitSet;
@@ -47,9 +47,9 @@ public class MapStorage implements SurveyorClientEvents.WorldLoad, SurveyorClien
             // empty chunks will return null for toSingleLayer, we don't want this
             if (layerSummary == null) layerSummary = new LayerSummary.Raw(new BitSet(256), new int[256], new int[256], new int[256], new int[256], new int[256], new int[256]);
             regions.computeIfAbsent(
-                    new ChunkPos(RegionSummary.chunkToRegion(pos.x), RegionSummary.chunkToRegion(pos.z)),
+                    new ChunkPos(RegionPos.chunkToRegion(pos.x), RegionPos.chunkToRegion(pos.z)),
                     c -> new LayerSummary.Raw[32][32]
-            )[RegionSummary.regionRelative(pos.x)][RegionSummary.regionRelative(pos.z)]
+            )[RegionPos.regionRelative(pos.x)][RegionPos.regionRelative(pos.z)]
                     = layerSummary;
             blockPalettes.put(pos, terrainSummary.getBlockPalette(pos));
             biomePalettes.put(pos, terrainSummary.getBiomePalette(pos));
@@ -58,13 +58,13 @@ public class MapStorage implements SurveyorClientEvents.WorldLoad, SurveyorClien
     }
 
     @Override
-    public void onWorldLoad(ClientLevel clientLevel, WorldSummary summary, LocalPlayer player, Map<ChunkPos, BitSet> terrain, Multimap<ResourceKey<Structure>, ChunkPos> structures, Multimap<UUID, ResourceLocation> multimap) {
+    public void onWorldLoad(ClientLevel world, WorldSummary summary, LocalPlayer player, Map<RegionPos, BitSet> terrain, Multimap<ResourceKey<Structure>, ChunkPos> structures, Multimap<UUID, ResourceLocation> landmarks) {
         regions.clear();
         biomePalettes.clear();
         blockPalettes.clear();
         ChunkRenderer.clear();
         updateLandmarks(summary.landmarks());
-        onTerrainUpdated(clientLevel, summary.terrain(), WorldTerrainSummary.toKeys(terrain));
+        onTerrainUpdated(world, summary.terrain(), WorldTerrainSummary.toKeys(terrain));
     }
 
     @Override

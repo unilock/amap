@@ -20,7 +20,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.MapColor;
 
 import folk.sisby.surveyor.terrain.LayerSummary;
-import folk.sisby.surveyor.terrain.RegionSummary;
+import folk.sisby.surveyor.util.RegionPos;
 import folk.sisby.surveyor.util.RegistryPalette;
 
 import java.util.HashMap;
@@ -38,8 +38,8 @@ public class ChunkRenderer {
         // needed for shading
         // done first to cancel as early as possible (map gets are expensive?)
         ChunkPos northChunkPos = new ChunkPos(chunkPos.x, chunkPos.z - 1);
-        ChunkPos northRegionPos = new ChunkPos(RegionSummary.chunkToRegion(northChunkPos.x), RegionSummary.chunkToRegion(northChunkPos.z));
-        ChunkPos northRegionRelativePos = new ChunkPos(RegionSummary.regionRelative(northChunkPos.x), RegionSummary.regionRelative(northChunkPos.z));
+        ChunkPos northRegionPos = new ChunkPos(RegionPos.chunkToRegion(northChunkPos.x), RegionPos.chunkToRegion(northChunkPos.z));
+        ChunkPos northRegionRelativePos = new ChunkPos(RegionPos.regionRelative(northChunkPos.x), RegionPos.regionRelative(northChunkPos.z));
 
         LayerSummary.Raw[][] northTerr = MapStorage.INSTANCE.regions.get(northRegionPos);
         if (northTerr == null) return;
@@ -62,8 +62,8 @@ public class ChunkRenderer {
         RegistryAccess registryAccess = level.registryAccess();
         Registry<Biome> biomeRegistry = registryAccess.registryOrThrow(Registries.BIOME);
 
-        ChunkPos regionPos = new ChunkPos(RegionSummary.chunkToRegion(chunkPos.x), RegionSummary.chunkToRegion(chunkPos.z));
-        ChunkPos regionRelativePos = new ChunkPos(RegionSummary.regionRelative(chunkPos.x), RegionSummary.regionRelative(chunkPos.z));
+        ChunkPos regionPos = new ChunkPos(RegionPos.chunkToRegion(chunkPos.x), RegionPos.chunkToRegion(chunkPos.z));
+        ChunkPos regionRelativePos = new ChunkPos(RegionPos.regionRelative(chunkPos.x), RegionPos.regionRelative(chunkPos.z));
         LayerSummary.Raw[][] terr = MapStorage.INSTANCE.regions.get(regionPos);
         RegistryPalette<Block>.ValueView blockPalette = MapStorage.INSTANCE.blockPalettes.get(chunkPos);
         RegistryPalette<Biome>.ValueView biomePalette = MapStorage.INSTANCE.biomePalettes.get(chunkPos);
