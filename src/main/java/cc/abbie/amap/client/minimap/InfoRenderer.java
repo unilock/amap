@@ -23,8 +23,7 @@ public class InfoRenderer {
             height += 2 * lineHeight;
         }
         if (MinimapConfig.INSTANCE.minimap.showBiome.value()) {
-			// TODO: sometimes this may be (2 * lineHeight)
-            height += lineHeight;
+            height += 2 * lineHeight;
         }
         if (MinimapConfig.INSTANCE.minimap.showMenuKey.value()) {
             height += lineHeight;
