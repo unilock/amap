@@ -8,6 +8,7 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
 
@@ -22,6 +23,7 @@ public class InfoRenderer {
             height += 2 * lineHeight;
         }
         if (MinimapConfig.INSTANCE.minimap.showBiome.value()) {
+			// TODO: sometimes this may be (2 * lineHeight)
             height += lineHeight;
         }
         if (MinimapConfig.INSTANCE.minimap.showMenuKey.value()) {
@@ -64,9 +66,11 @@ public class InfoRenderer {
             if (level == null || player == null) return;
 
             ResourceLocation biomeId = level.getBiome(player.blockPosition()).unwrapKey().orElseThrow().location();
-            Component infoLine = Component.translatable("biome.%s.%s".formatted(biomeId.getNamespace(), biomeId.getPath()));
-            gui.drawCenteredString(font, infoLine, centreX, yOffset, -1);
-            yOffset += lineHeight;
+            Component biomeName = Component.translatable("biome.%s.%s".formatted(biomeId.getNamespace(), biomeId.getPath()));
+            for (FormattedCharSequence infoLine : font.split(biomeName, rightX - leftX)) {
+				gui.drawCenteredString(font, infoLine, centreX, yOffset, -1);
+				yOffset += lineHeight;
+			}
         }
 
         if (MinimapConfig.INSTANCE.minimap.showMenuKey.value()) {
