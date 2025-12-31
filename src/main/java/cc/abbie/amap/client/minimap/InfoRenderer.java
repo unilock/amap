@@ -67,9 +67,9 @@ public class InfoRenderer {
             ResourceLocation biomeId = level.getBiome(player.blockPosition()).unwrapKey().orElseThrow().location();
             Component biomeName = Component.translatable("biome.%s.%s".formatted(biomeId.getNamespace(), biomeId.getPath()));
             for (FormattedCharSequence infoLine : font.split(biomeName, rightX - leftX)) {
-				gui.drawCenteredString(font, infoLine, centreX, yOffset, -1);
-				yOffset += lineHeight;
-			}
+                gui.drawCenteredString(font, infoLine, centreX, yOffset, -1);
+                yOffset += lineHeight;
+            }
         }
 
         if (MinimapConfig.INSTANCE.minimap.showMenuKey.value()) {

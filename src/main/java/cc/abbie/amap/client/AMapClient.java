@@ -5,6 +5,7 @@ import cc.abbie.amap.client.minimap.MinimapHud;
 import folk.sisby.surveyor.WorldSummary;
 import folk.sisby.surveyor.client.SurveyorClientEvents;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientWorldEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 
@@ -18,7 +19,7 @@ public class AMapClient implements ClientModInitializer {
         WorldSummary.enableTerrain();
         WorldSummary.enableLandmarks();
 
-        SurveyorClientEvents.Register.worldLoad(AMap.id("world_load"), MapStorage.INSTANCE);
+        ClientWorldEvents.AFTER_CLIENT_WORLD_CHANGE.register(MapStorage.INSTANCE::onWorldLoad);
         SurveyorClientEvents.Register.terrainUpdated(AMap.id("terrain_updated"), MapStorage.INSTANCE);
         SurveyorClientEvents.Register.landmarksAdded(AMap.id("landmarks_added"), MapStorage.INSTANCE);
         SurveyorClientEvents.Register.landmarksRemoved(AMap.id("landmarks_removed"), MapStorage.INSTANCE);
